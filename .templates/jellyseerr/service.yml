@@ -6,7 +6,7 @@
       - PGID=1000
       - TZ=UTC
     volumes:
-      - /volumes/jellyseerr/config:/app/config
+      - ./volumes/jellyseerr/config:/app/config
     ports:
       - 5055:5055
     restart: unless-stopped
