@@ -8,66 +8,26 @@
 declare -A cont_array=(
 	[portainer]="Portainer - GUI Docker Manager"
 	[sonarr]="Sonarr"
-	[medusa]="Medusa"
 	[radarr]="Radarr"
 	[lidarr]="Lidarr"
 	[bazarr]="Bazarr"
-	[jackett]="Jackett"
-	[prowlarr]="Prowlarr - Jackett alternative (dev)"
-	[deluge]="Deluge - Torrent Client"
+	[prowlarr]="Prowlarr"
 	[qbittorrent]="qBittorrent - Torrent Client"
-	[transmission]="Transmission - Torrent Client"
-	[nzbget]="NZBGet - Usenet groups client"
-	[sabznbd]="SABznbd - Usenet groups client"
 	[jellyfin]="JellyFin - Media manager no license needed"
-	[plex]="Plex - Media manager"
-	[ombi]="Ombi - Plex Requests Server"
-	[overseerr]="Overseerr - Plex Requests Server"
 	[jellyseerr]="Jellyseerr - JellyFin Requests Server"
-	[emby]="Emby - Media manager like Plex"
-	[embystat]="EmbyStat - Statistics for Emby"
-	[tvheadend]="TVheadend - TV streaming server"
-	[traefik]="Traefik 2 - Reverse Proxy"
-	[web]="Web Server - NGINX + PHP + MariaDB + phpMyAdmin"
-	[pihole]="Pi-Hole - Private DNS sinkhole"
-	[vpn]="VPN-Client - OpenVPN Gateway"
-	[honeygain]="Check - Earn \$ with LMDS - in main menu"
-	[iproyal]="Check - Earn \$ with LMDS - in main menu"
-  	[peer2profit]="Check - Earn \$ with LMDS - in main menu"
-
 )
 
 # CONTAINER keys
 declare -a armhf_keys=(
 	"portainer"
 	"sonarr"
-	"medusa"
 	"radarr"
 	"lidarr"
 	"bazarr"
-	"jackett"
 	"prowlarr"
 	"jellyfin"
-	"emby"
-	"embystat"
-	"plex"
-	"ombi"
-	"overseerr"
 	"jellyseerr"
-	"tvheadend"
-	"transmission"
-	"deluge"
 	"qbittorrent"
-	"nzbget"
-	"sabznbd"
-	"pihole"
-	"web"
-	"traefik"
-	"vpn"
-	"honeygain"
-	"iproyal"
-	"peer2profit"
-
 )
 
 sys_arch=$(uname -m)
@@ -203,7 +163,6 @@ mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"update" "Update LMDS Stack" \
 	"update_compose" "Update Docker-compose" \
 	"backup" "Backup and Restore LMDS" \
-	"earn" "Earn \$ with LMDS" \
 	3>&1 1>&2 2>&3)
 
 
@@ -366,149 +325,6 @@ case $mainmenu_selection in
 		echo -e "     "
 	fi
  ;;
-
-       #Earn with LMDS ---------------------------------------------------------------------
-"earn")
-#Add x86 to crontab so it rund after reboot 
-        function addtocrontab () {
-          local frequency=$1
-          local command=$2
-          local job="$frequency $command"
-        cat <(fgrep -i -v "$command" <(crontab -l)) <(echo "$job") | crontab -
-        }
-        addtocrontab "@reboot" "docker run --privileged --rm tonistiigi/binfmt --install x86_64"
-# Earn options 
-	earn_sellection=$(
-		whiptail --title "Earn with LMDS" --menu --notags \
-			"Current Earning Options supported by LMDS" 20 78 12 -- \
-			"honeygain" "HoneyGain - Docker container" \
-			"iproyal" "IPRoyal - Docker container" \
-			"peer2profit" "Peer2Profit - Docker container" \
-			"earnapp" "EarnApp - Native Linux App" \
-			3>&1 1>&2 2>&3
-	)
-
-	case $earn_sellection in
-	"earnapp")
-		if (whiptail --title "EarnApp" --yesno "Native Linux App not a container. \nnThis App will use some of your Internet bandwidth to generate profit. \nEarnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/EarnAppLMDS.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi \n\nCreate an acount before continuing at: \nhttps://earnapp.com/i/snq8y4m" 20 70)
-		then 
-			sudo ./scripts/earnlmds.sh
-fi
-;;
-	"honeygain")
-honeyemail=$(whiptail --inputbox "Steps: \n1. Register at: https://r.honeygain.me/GREENFDEC8 \n2. Enter Email used during registration to the filed below\n3. OK \n\nHoneygain is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nEnter Email you registered with Honeygain" 22 80 your@email --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
-honeypass=$(whiptail --inputbox "Steps: \n4. Enter Honeygain password you use on the website \n5. OK" 15 60 password --title "Honeygain Container Setup" 3>&1 1>&2 2>&3) 
-honeyname=$(whiptail --inputbox "Steps: \n6. Enter a container name for deployment \n7. OK" 15 60 honeygain01 --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
-
-exitstatus=$?
-if [ $exitstatus = 0 ] && [ -z "$honeyemail" ]
-	then
-		echo -e "\e[36;1mCancel - Container not created\e[0m"
-	else
-		#echo $honeyemail $honeypass $honeyname
-		if [ -d services/honeygain ]
-		then
-			echo -e "\e[36;1mHoneygain already deployed - check docker-compose.yml\e[0m"
-			echo -e "\e[36;1mIf missing, edit and copy definitions from ~/LMDS/services/honeygain/service.yml\e[0m"
-		else
-			mkdir -p services/honeygain
-			mkdir .templates/honeygain
-			touch .templates/honeygain/service.yml
-			cat > .templates/honeygain/service.yml <<EOF
-  $honeyname:
-    container_name: $honeyname
-    image: honeygain/honeygain
-    command:  -tou-accept -email $honeyemail -pass $honeypass -device $honeyname
-    restart: unless-stopped
-EOF
-			cat .templates/honeygain/service.yml >> docker-compose.yml
-			cp .templates/honeygain/service.yml services/honeygain/
-			cat >> services/selection.txt <<EOF 
-honeygain
-EOF
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64  &> /dev/null
-			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
-			echo -e "\e[36;1mrun \e[104;1mdocker-compose up -d\e[0m to create container\e[0m"
-			fi	
-	fi
-;;
-
-	"iproyal")
-iproyalemail=$(whiptail --inputbox "Steps: \n1. Register at: https://iproyal.com/pawns?r=lmds \n2. Enter Email used during registration to the filed below\n3. OK \n\nIPRoyal Pown is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/IPRoyalLMDS.php \n\nEnter Email you registered with IPRoyals" 22 80 your@email --title "IPRoyal Container Setup" 3>&1 1>&2 2>&3)
-iproyalpass=$(whiptail --inputbox "Steps: \n4. Enter IPRoyal password you use on the website \n5. OK" 15 60 password --title "IPRoyal Container Setup" 3>&1 1>&2 2>&3) 
-iproyalname=$(whiptail --inputbox "Steps: \n6. Enter a container name for deployment \n7. OK" 15 60 IPRoyal01 --title "IPRoyal Container Setup" 3>&1 1>&2 2>&3)
-
-exitstatus=$?
-if [ $exitstatus = 0 ] && [ -z "$iproyalemail" ]
-	then
-	echo -e "\e[36;1mCancel - Container not created\e[0m"
-else
-		#echo $honeyemail $honeypass $honeyname
-		if [ -d services/iproyal ]
-		then
-			echo -e "\e[36;1mIPRoyal already deployed - check docker-compose.yml\e[0m"
-			echo -e "\e[36;1mIf missing, edit and copy definitions from ~/LMDS/services/iproyal/service.yml\e[0m"
-		else
-			mkdir -p services/iproyal
-			mkdir .templates/iproyal
-			touch .templates/iproyal/service.yml
-			cat > .templates/iproyal/service.yml <<EOF
-  $iproyalname:
-    container_name: $iproyalname
-    image: iproyal/pawns-cli
-    command:  -accept-tos -email=$iproyalemail -password=$iproyalpass -device-name=$iproyalname 
-    restart: unless-stopped
-EOF
-
-			cat .templates/iproyal/service.yml >> docker-compose.yml
-			cp .templates/iproyal/service.yml services/iproyal/
-			cat >> services/selection.txt <<EOF 
-iproyal
-EOF
-			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
-			echo -e "\e[36;1mrun \e[104;1mdocker-compose up -d\e[0m to create container\e[0m"
-			fi
-	fi
-;;
-
-	"peer2profit")
-peeremail=$(whiptail --inputbox "Steps: \n1. Register at: https://p2pr.me/164528477962110dab05459 \n2. Enter Email used in registration to the filed below\n3. OK \n\nPeer2Profit is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/Peer2ProfitLMDS.php \n\nProvide Email you registered with Peer2Profit" 22 80 your@email --title "Peer2Profit Container Setup" 3>&1 1>&2 2>&3)
-
-exitstatus=$?
-if [ $exitstatus = 0 ]
-	then
-		if [ -d services/peer2profit ]
-		then
-			echo -e "\e[36;1mPeer2Profit already deployed - check docker-compose.yml\e[0m"
-			echo -e "\e[36;1mIf missing, edit and copy definitions from ~/LMDS/services/peer2profit/service.yml\e[0m"
-		else
-			mkdir -p services/peer2profit
-			mkdir .templates/peer2profit
-			touch .templates/peer2profit/service.yml
-			cat > .templates/peer2profit/service.yml <<EOF
-  peer2profit01:
-    container_name: peer2profit01
-    image: peer2profit/peer2profit_x86_64:latest
-    environment:
-      P2P_EMAIL: ${peeremail}
-    restart: unless-stopped
-EOF
-			cat .templates/peer2profit/service.yml >> docker-compose.yml
-			cp .templates/peer2profit/service.yml services/peer2profit/
-			cat >> services/selection.txt <<EOF 
-peer2profit
-EOF
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64 &> /dev/null
-			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
-			echo -e "\e[36;1mrun \e[104;1mdocker-compose up -d\e[0m to create container\e[0m"
-			fi
-	else
-    	echo -e "\e[36;1mCancel - Container not created\e[0m"
-	fi
-		;;
-	esac
-	;;
-
 
 	#Backup menu ---------------------------------------------------------------------
 "backup")
