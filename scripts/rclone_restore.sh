@@ -5,7 +5,7 @@
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
 
 		#change permissions to pi
-		sudo chown pi:pi ~/LMDS/LMDSBackups
+		sudo chown root:root ~/LMDS/LMDSBackups
 		
 		# resync from gdrive to ~/LMDS/LMDSBackups
 		rclone sync -P gdrive:/LMDSBackups/ --include "/LMDSbackup*" ./LMDSBackups > ./LMDSBackups/rclone_sync_log

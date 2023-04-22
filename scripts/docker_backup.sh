@@ -22,12 +22,12 @@ sudo tar -czf \
 rm list.txt
 
 #set permission for backup files
-sudo chown pi:pi ./backups/backup*
+sudo chown root:root ./backups/backup*
 
 #create local logfile and append the latest backup file to it
 echo "backup saved to ./backups/$backupfile"
 sudo touch $logfile
-sudo chown pi:pi $logfile
+sudo chown root:root $logfile
 echo $backupfile >>$logfile
 
 #show size of archive file
@@ -59,7 +59,7 @@ if [ -f ./backups/dropbox ]; then
 
 	#write files to be deleted to dropbox logfile
 	sudo touch $dropboxlog
-	sudo chown pi:pi $dropboxlog
+	sudo chown root:root $dropboxlog
 	echo $files | tr " " "\n" >$dropboxlog
 
 	#delete files from dropbox as per logfile

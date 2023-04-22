@@ -1,6 +1,6 @@
 		#add enable file for rclone
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
-		sudo chown pi:pi -R ~/LMDS/LMDSBackups
+		sudo chown root:root -R ~/LMDS/LMDSBackups
 
     if ls ~/LMDS/ | grep -w 'docker-compose.yml' >> /dev/null ; then
 
@@ -22,12 +22,12 @@
                         rm list.txt
 
         #set permission for backup files
-        sudo chown pi:pi ./LMDSBackups/LMDS*
+        sudo chown root:root ./LMDSBackups/LMDS*
 
         #create local logfile and append the latest backup file to it
         echo -e "\e[36;1m    Backup file created \e[32;1m $(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')\e[0m"
         sudo touch $logfile
-        sudo chown pi:pi $logfile
+        sudo chown root:root $logfile
         echo $backupfile >>$logfile
 
         #remove older local backup files

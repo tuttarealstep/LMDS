@@ -198,7 +198,7 @@ case $mainmenu_selection in
 		echo -e "     "
 	fi
 
-	if (whiptail --title "Restart Required" --yesno "It is recommended that you restart your device now. User (pi) was added to the (docker) user group for this to take effect logout and log back in or reboot. Select yes to do so now" 20 78); then
+	if (whiptail --title "Restart Required" --yesno "It is recommended that you restart your device now. User (root) was added to the (docker) user group for this to take effect logout and log back in or reboot. Select yes to do so now" 20 78); then
 		sudo reboot
 	fi
 	;;
