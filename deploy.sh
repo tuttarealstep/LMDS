@@ -15,6 +15,7 @@ declare -A cont_array=(
 	[qbittorrent]="qBittorrent - Torrent Client"
 	[jellyfin]="JellyFin - Media manager no license needed"
 	[jellyseerr]="Jellyseerr - JellyFin Requests Server"
+	[flaresolverr]="FlareSolverr - Proxy server to bypass Cloudflare and DDoS-GUARD protection."
 )
 
 # CONTAINER keys
@@ -27,7 +28,8 @@ declare -a armhf_keys=(
 	"prowlarr"
 	"jellyfin"
 	"jellyseerr"
-	"qbittorrent"
+	"qbittorrent",
+	"flaresolverr"
 )
 
 sys_arch=$(uname -m)

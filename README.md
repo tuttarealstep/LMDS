@@ -20,6 +20,7 @@ Create Docker server and start microservices in minutes with LMDS.
   <li> qBittorrent - Torrent Client : 15080</li>
   <li> JellyFin - Media manager OpenSource : <b>8096</b></li>
   <li> Jellyseerr - Jellyfin Requests Server : 5055</li>
+  <li> FlareSolverr : 8191</li>
   </ul>
 <br>
 <i>Numbers after ":" identify a port that particular container will respond on, i.e. Portainer default port is :9000, point your browser it to your server IP adding :9000 at the end i.e. http://192.168.100.100:9000 you will see Portainer login page.</i>

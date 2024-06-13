@@ -1,0 +1,7 @@
+  flaresolverr:
+    image: flaresolverr/flaresolverr
+    container_name: flaresolverr
+    user: 1000:1000
+    ports:
+      - 8191:8191
+    restart: unless-stopped
