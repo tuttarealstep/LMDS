@@ -158,12 +158,12 @@ fi
 # Display main menu
 mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"" 20 78 12 -- \
-	"install" "Install Docker & Docker-compose" \
+	"install" "Install Docker & Docker compose plugin" \
 	"build" "Build LMDS Stack" \
 	"commands" "Docker commands" \
 	"misc" "Miscellaneous commands" \
 	"update" "Update LMDS Stack" \
-	"update_compose" "Update Docker-compose" \
+	"update_compose" "Update Docker compose plugin" \
 	"backup" "Backup and Restore LMDS" \
 	3>&1 1>&2 2>&3)
 
@@ -184,19 +184,19 @@ case $mainmenu_selection in
 		sudo usermod -aG docker $USER &> /dev/null
 		# backporting libseccomp to prevent issues bug 8,9,10 and 11
         # Releases : https://github.com/seccomp/libseccomp/releases
-                wget http://ftp.us.debian.org/debian/pool/main/libs/libseccomp/libseccomp2_2.5.1-1_armhf.deb  &> /dev/null
-                sudo dpkg -i libseccomp2_2.5.1-1_armhf.deb &> /dev/null
-                sudo rm libseccomp2_2.5.1-1_armhf.deb &> /dev/null
+        #        wget http://ftp.us.debian.org/debian/pool/main/libs/libseccomp/libseccomp2_2.5.1-1_armhf.deb  &> /dev/null
+        #        sudo dpkg -i libseccomp2_2.5.1-1_armhf.deb &> /dev/null
+        #        sudo rm libseccomp2_2.5.1-1_armhf.deb &> /dev/null
 		echo -e "\e[32;1m    Docker Installed\e[0m"
 
 	fi
 
-	if command_exists docker-compose; then
-		echo -e "\e[30;48;5;82m   Docker-compose already installed\e[0m"
+	if command_exists "docker compose"; then
+		echo -e "\e[30;48;5;82m   Docker compose plugin already installed\e[0m"
 	else
-		echo -e "\e[33;1m    Installing docker-compose - please wait\e[0m"
-		sudo apt install -y docker-compose &> /dev/null
-		echo -e "\e[32;1m    Docker-compose Installed\e[0m"
+		echo -e "\e[33;1m    Installing docker compose plugin - please wait\e[0m"
+		sudo apt install -y docker-compose-plugin &> /dev/null
+		echo -e "\e[32;1m    Docker compose Installed\e[0m"
 		echo -e "     "
 	fi
 
@@ -269,8 +269,8 @@ case $mainmenu_selection in
 			fi
 		fi
 
-		echo "docker-compose successfully created"
-		echo -e "run \e[104;1mdocker-compose up -d\e[0m to start the stack"
+		echo "docker compose plugin successfully created"
+		echo -e "run \e[104;1mdocker compose up -d\e[0m to start the stack"
 	else
 
 		echo "Build cancelled"
@@ -318,11 +318,11 @@ case $mainmenu_selection in
 
 	#Update Docker-compose --------------------------------------------------------$
 "update_compose")
-	if command_exists docker-compose; then
+	if command_exists "docker compose"; then
 		 ./scripts/update_compose.sh
 	else
 		echo -e "     "
-		echo -e "\e[33;1m   Docker-compose not installed yet.\e[0m"
+		echo -e "\e[33;1m   Docker compose plugin not installed yet.\e[0m"
 		echo -e "\e[32;1m   Install it first then update if needed.\e[0m"
 		echo -e "     "
 	fi

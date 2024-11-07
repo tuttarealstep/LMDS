@@ -28,7 +28,7 @@
 
 		# start all containers from docker-comose/yml
 		echo -e "\e[36;1m    Starting all containers\e[0m"
-		docker-compose up -d
+		docker compose up -d
 
 		sleep 7
 		echo -e "\e[36;1m    Restore completed\e[0m"
@@ -53,7 +53,7 @@
 
 			# start all containers from docker-comose/yml
 			echo -e "\e[36;1m    Starting all containers\e[0m"
-			docker-compose up -d
+			docker compose up -d
 
 			sleep 7
 			echo -e "\e[36;1m    Restore completed \e[0m"

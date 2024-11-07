@@ -55,7 +55,7 @@ Static IP address is not absolutely necessary just to try the project to find ou
 
 ### Install Docker & Docker-compose
 
-<p>First "Install Docker & Docker-compose" this might take a while. Script will install Docker and Docker-compose. When installation is completed you will be prompted to reboot, please do so before continuing.<p>
+<p>First "Install Docker & Docker compose plugin" this might take a while. Script will install Docker and Docker-compose. When installation is completed you will be prompted to reboot, please do so before continuing.<p>
 
 ### Build LMDS Stack
 
@@ -75,9 +75,9 @@ Static IP address is not absolutely necessary just to try the project to find ou
 
 <p>Each time you run <code>./deploy.sh</code> script will check GitHub repository for any updates and download them if available. You can also manually check for update using this option. Updates will not modify your configuration or any private files except the ones that are part of the LMDS logic. Some new functions might be added or new containers etc.</p>
 
-### Update Docker-compose
+### Update Docker compose plugin
 
-<p>Debian based distribution is not always first to adopt latest Docker-compose updates and even if you keep your system up to date issuing apt-get update $ upgrade you will find out that your Docker-compose version is sometimes quite out of date. This option is specifically created to target Docker-compose updates to be done as easily as possible. Script is removing current Docker-compose and utilizing PIP Install newest available published by Docker-compose guys independently from what is available in Debian repository.</p>
+<p>This option will update Docker compose plugin to the latest version. It will remove the old one and install the new one.</p>
 
 ### Backup and Restore LMDS
 
