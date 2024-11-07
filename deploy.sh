@@ -416,7 +416,7 @@ case $mainmenu_selection in
 
 "update")
 	echo "Pulling latest project file from Github.com ---------------------------------------------"
-	git pull origin main
+	git pull
 	echo "git status ------------------------------------------------------------------------------"
 	git status
 	;;
