@@ -13,29 +13,14 @@ Create Docker server and start microservices in minutes with LMDS.
 <ul>
   <li>Portainer - GUI Docker Manager :9000</li>
   <li> Sonarr : 8989</li>
-  <li> Medusa : 8081</li>
   <li> Radarr : 7878</li>
   <li> Lidarr : 8686</li>
   <li> Bazarr : 6767</li>
-  <li> Jackett : 9117</li>
-  <li> Prowlarr - Jackett alternative (dev) : 9696</li>
-  <li> Deluge - Torrent Client : 8112</li>
+  <li> Prowlarr : 9696</li>
   <li> qBittorrent - Torrent Client : 15080</li>
-  <li> Transmission - Torrent Client : 9091</li>
-  <li> NZBGet - Usenet groups client : 6789</li>
-  <li> SABnzbd - Usenet groups client : 8080</li>
   <li> JellyFin - Media manager OpenSource : <b>8096</b></li>
-  <li> Emby - Media manager like Plex : <b>8096</b></li>
-  <li> Plex - Media manager : 32400/web</li>
-  <li> Ombi - Plex Requests Server : 3579</li>
-  <li> Overseerr - Plex Requests Server : 5055</li>
   <li> Jellyseerr - Jellyfin Requests Server : 5055</li>
-  <li> EmbyStat - Statistics for Emby : 6555</li>
-  <li> TVheadend - TV streaming server : 9981 </li>
-  <li> NPMP Server - NGINX + PHP + MariaDB + phpMyAdmin: 80 (Instructions: https://greenfrognest.com/LMDSwebServ.php)</li>
-  <li> Pi-Hole - Private DNS sinkhole : 8089 <b>WebPass: <i>greenfrog</i></b></li>
-  <li> VPN-Client - OpenVPN Gateway (Instructions: https://greenfrognest.com/LMDSVPN.php)</li>
-  <li> Traefik 2 - Reverse Proxy (Instructions: https://greenfrognest.com/LMDSTraefikProxy.php)</li>
+  <li> FlareSolverr : 8191</li>
   </ul>
 <br>
 <i>Numbers after ":" identify a port that particular container will respond on, i.e. Portainer default port is :9000, point your browser it to your server IP adding :9000 at the end i.e. http://192.168.100.100:9000 you will see Portainer login page.</i>
@@ -70,7 +55,7 @@ Static IP address is not absolutely necessary just to try the project to find ou
 
 ### Install Docker & Docker-compose
 
-<p>First "Install Docker & Docker-compose" this might take a while. Script will install Docker and Docker-compose. When installation is completed you will be prompted to reboot, please do so before continuing.<p>
+<p>First "Install Docker & Docker compose plugin" this might take a while. Script will install Docker and Docker-compose. When installation is completed you will be prompted to reboot, please do so before continuing.<p>
 
 ### Build LMDS Stack
 
@@ -90,9 +75,9 @@ Static IP address is not absolutely necessary just to try the project to find ou
 
 <p>Each time you run <code>./deploy.sh</code> script will check GitHub repository for any updates and download them if available. You can also manually check for update using this option. Updates will not modify your configuration or any private files except the ones that are part of the LMDS logic. Some new functions might be added or new containers etc.</p>
 
-### Update Docker-compose
+### Update Docker compose plugin
 
-<p>Debian based distribution is not always first to adopt latest Docker-compose updates and even if you keep your system up to date issuing apt-get update $ upgrade you will find out that your Docker-compose version is sometimes quite out of date. This option is specifically created to target Docker-compose updates to be done as easily as possible. Script is removing current Docker-compose and utilizing PIP Install newest available published by Docker-compose guys independently from what is available in Debian repository.</p>
+<p>This option will update Docker compose plugin to the latest version. It will remove the old one and install the new one.</p>
 
 ### Backup and Restore LMDS
 
