@@ -21,6 +21,7 @@ Create Docker server and start microservices in minutes with LMDS.
   <li> JellyFin - Media manager OpenSource : <b>8096</b></li>
   <li> Jellyseerr - Jellyfin Requests Server : 5055</li>
   <li> FlareSolverr : 8191</li>
+  <li> Verdaccio - Private npm registry : 4873, use HTTPS reverse proxy</li>
   </ul>
 <br>
 <i>Numbers after ":" identify a port that particular container will respond on, i.e. Portainer default port is :9000, point your browser it to your server IP adding :9000 at the end i.e. http://192.168.100.100:9000 you will see Portainer login page.</i>
@@ -62,6 +63,39 @@ Static IP address is not absolutely necessary just to try the project to find ou
 <p>Next "Build LMDS Stack", select docker containers that you would like to pull and deploy. You do not have to select them all, select only the one you will use. You can add or remove your selection later on if needed. Selecting only containers you need will reduce RAM consumption on your Pi what might be a problem on RPi 3 that has only 1GB or RAM</p>
 
 <p>You might want to install Portainer among all the other containers for sure - Portainer is a graphical interface that lets you manage Docker engine - very useful tool if you don’t want to use Docker command Line interface.</p>
+
+### Verdaccio private npm registry
+
+<p>Verdaccio is configured as a private npm registry for packages under the <code>@ao/*</code> scope. The container exposes port <code>4873</code> like the other LMDS services, so publish and install traffic should go through an HTTPS reverse proxy such as Nginx, Caddy, Traefik, or Nginx Proxy Manager.</p>
+
+<p>The default Verdaccio policy requires authentication for access and publish. The <code>@ao/*</code> scope does not proxy to npmjs, which avoids dependency confusion for private packages.</p>
+
+Example reverse proxy target from another server:
+
+<pre><code>http://LMDS_SERVER_IP:4873</code></pre>
+
+Restrict direct access to port <code>4873</code> at firewall level so only the reverse proxy server can reach it.
+
+Make sure the proxy forwards at least:
+
+<pre><code>Host
+X-Forwarded-For
+X-Forwarded-Proto</code></pre>
+
+Create the first user after starting Verdaccio:
+
+<pre><code>npm adduser --registry https://npm.example.com --auth-type=legacy</code></pre>
+
+For client projects, add an <code>.npmrc</code> like:
+
+<pre><code>@ao:registry=https://npm.example.com/
+//npm.example.com/:_authToken=${NPM_TOKEN}</code></pre>
+
+For local publishing from a package:
+
+<pre><code>npm publish --registry https://npm.example.com</code></pre>
+
+After creating the required registry users, consider setting <code>max_users: -1</code> in <code>services/verdaccio/conf/config.yaml</code> to disable self-registration.
 
 ### Docker commands
 

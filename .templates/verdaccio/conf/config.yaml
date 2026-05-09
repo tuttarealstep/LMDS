@@ -1,0 +1,49 @@
+storage: /verdaccio/storage
+plugins: /verdaccio/plugins
+
+web:
+  title: Verdaccio - private npm registry
+  enable: true
+
+auth:
+  htpasswd:
+    file: /verdaccio/conf/htpasswd
+    max_users: 1
+    algorithm: bcrypt
+    rounds: 10
+
+security:
+  api:
+    jwt:
+      sign:
+        expiresIn: 30d
+        notBefore: 0
+  web:
+    sign:
+      expiresIn: 1h
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+
+packages:
+  '@ao/*':
+    access: $authenticated
+    publish: $authenticated
+    unpublish: $authenticated
+
+  '@*/*':
+    access: $authenticated
+    publish: $authenticated
+    proxy: npmjs
+
+  '**':
+    access: $authenticated
+    publish: $authenticated
+    proxy: npmjs
+
+middlewares:
+  audit:
+    enabled: true
+
+log: { type: stdout, format: pretty, level: http }

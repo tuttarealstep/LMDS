@@ -16,10 +16,11 @@ declare -A cont_array=(
 	[jellyfin]="JellyFin - Media manager no license needed"
 	[jellyseerr]="Jellyseerr - JellyFin Requests Server"
 	[flaresolverr]="FlareSolverr - Proxy server to bypass Cloudflare and DDoS-GUARD protection."
+	[verdaccio]="Verdaccio - Private npm registry"
 )
 
 # CONTAINER keys
-declare -a armhf_keys=(
+declare -a container_keys=(
 	"portainer"
 	"sonarr"
 	"radarr"
@@ -28,8 +29,9 @@ declare -a armhf_keys=(
 	"prowlarr"
 	"jellyfin"
 	"jellyseerr"
-	"qbittorrent",
+	"qbittorrent"
 	"flaresolverr"
+	"verdaccio"
 )
 
 sys_arch=$(uname -m)
@@ -212,12 +214,15 @@ case $mainmenu_selection in
 	entry_options=()
 
 	#check architecture and display appropriate menu
-	if [ $(echo "$sys_arch" | grep -c "arm") ]; then
-		keylist=("${armhf_keys[@]}")
-	else
-		echo "your architecture is not supported yet"
-		exit
-	fi
+	case "$sys_arch" in
+		arm*|aarch64|x86_64|amd64)
+			keylist=("${container_keys[@]}")
+			;;
+		*)
+			echo "your architecture is not supported yet"
+			exit
+			;;
+	esac
 
 	#loop through the array of descriptions
 	for index in "${keylist[@]}"; do

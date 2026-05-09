@@ -1,0 +1,12 @@
+  verdaccio:
+    container_name: verdaccio
+    image: verdaccio/verdaccio:6
+    restart: unless-stopped
+    ports:
+      # Expose to the network for an external HTTPS reverse proxy.
+      # Restrict this port at firewall level to the proxy server IP.
+      - "4873:4873"
+    volumes:
+      - ./services/verdaccio/conf:/verdaccio/conf
+      - ./volumes/verdaccio/storage:/verdaccio/storage
+      - ./services/verdaccio/plugins:/verdaccio/plugins
