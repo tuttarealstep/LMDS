@@ -8,7 +8,7 @@ web:
 auth:
   htpasswd:
     file: /verdaccio/conf/htpasswd
-    max_users: 1
+    max_users: 2
     algorithm: bcrypt
     rounds: 10
 
