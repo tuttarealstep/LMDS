@@ -14,7 +14,7 @@ declare -A cont_array=(
 	[prowlarr]="Prowlarr"
 	[qbittorrent]="qBittorrent - Torrent Client"
 	[jellyfin]="JellyFin - Media manager no license needed"
-	[jellyseerr]="Jellyseerr - JellyFin Requests Server"
+	[seerr]="Seerr - JellyFin Requests Server"
 	[flaresolverr]="FlareSolverr - Proxy server to bypass Cloudflare and DDoS-GUARD protection."
 	[verdaccio]="Verdaccio - Private npm registry"
 )
@@ -28,7 +28,7 @@ declare -a container_keys=(
 	"bazarr"
 	"prowlarr"
 	"jellyfin"
-	"jellyseerr"
+	"seerr"
 	"qbittorrent"
 	"flaresolverr"
 	"verdaccio"

@@ -19,7 +19,7 @@ Create Docker server and start microservices in minutes with LMDS.
   <li> Prowlarr : 9696</li>
   <li> qBittorrent - Torrent Client : 15080</li>
   <li> JellyFin - Media manager OpenSource : <b>8096</b></li>
-  <li> Jellyseerr - Jellyfin Requests Server : 5055</li>
+  <li> Seerr - Jellyfin Requests Server : 5055</li>
   <li> FlareSolverr : 8191</li>
   <li> Verdaccio - Private npm registry : 4873, use HTTPS reverse proxy</li>
   </ul>
