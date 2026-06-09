@@ -95,7 +95,9 @@ For local publishing from a package:
 
 <pre><code>npm publish --registry https://npm.example.com</code></pre>
 
-After creating the required registry users, consider setting <code>max_users: -1</code> in <code>services/verdaccio/conf/config.yaml</code> to disable self-registration.
+After creating the required registry users, consider setting <code>max_users: -1</code> in <code>volumes/verdaccio/conf/config.yaml</code> to disable self-registration.
+
+Verdaccio data, auth, config, and local plugins persist under <code>volumes/verdaccio/</code>. Existing installs are migrated automatically from <code>services/verdaccio/</code> the next time you rebuild Verdaccio with <code>./deploy.sh</code>.
 
 ### Docker commands
 

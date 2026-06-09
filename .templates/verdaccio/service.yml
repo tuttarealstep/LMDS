@@ -7,6 +7,6 @@
       # Restrict this port at firewall level to the proxy server IP.
       - "4873:4873"
     volumes:
-      - ./services/verdaccio/conf:/verdaccio/conf
+      - ./volumes/verdaccio/conf:/verdaccio/conf
       - ./volumes/verdaccio/storage:/verdaccio/storage
-      - ./services/verdaccio/plugins:/verdaccio/plugins
+      - ./volumes/verdaccio/plugins:/verdaccio/plugins
